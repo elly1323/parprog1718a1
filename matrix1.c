@@ -6,6 +6,7 @@
 
 
 #define NCOLS 100
+#define NROWS 100000
 
 void get_walltime(double *wct) {
   struct timeval tp;
@@ -24,15 +25,26 @@ double ts,te;
     printf("alloc error!\n");
     exit(1);
   }
-
+  
+  
   // warmup
-
+int i,j;
+double time;
+int sum=0;
   // ...your code here...
-
+for (i=0; i<NROWS*NCOLS; i++){
+	table[i]=0.0;
+}
   // get starting time (double, seconds) 
   get_walltime(&ts);
   
   // workload
+for (i=0; i<NROWS;i++){
+  	for (j=0; j<NCOLS;j++){
+  	table[i,j]=1.0;
+	sum++;    
+	  }
+  }
 
   // ...your code here...
 
@@ -40,15 +52,17 @@ double ts,te;
   get_walltime(&te);
 
   // check results
-  
+  printf ("Number of accesses: %d\n", sum);
   // ...your code here...
+  time= te-ts;
+  double prospelaseis=sum/(time*1e6);
+  printf ("Maccesses/sec: %f\n", prospelaseis);
 
   // print time elapsed and/or Maccesses/sec
-  
+  printf ("Time elapsed: %f sec", time);
   // ...your code here...  
   
   free(table);
 
   return 0;
 }
-
